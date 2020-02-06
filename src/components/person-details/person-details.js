@@ -4,6 +4,7 @@ import './person-details.css';
 import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
+import ErrorButton from '../error-button';
 
 export default class PersonDetails extends Component {
 
@@ -55,9 +56,9 @@ export default class PersonDetails extends Component {
 
     const { person, loading, error } = this.state;
 
-    // if (!this.state.person) {
-    //   return <span>Select a person from a list</span>
-    // }
+    if (!this.state.person) {
+      return <span>Select a person from a list</span>
+    }
 
     const hasContent = !(loading || error);
     const errorMessage = error ? <ErrorIndicator /> : null;
@@ -97,6 +98,7 @@ const PersonView = ({ person }) => {
             <span> {eyeColor} </span>
           </li>
         </ul>
+        <ErrorButton />
       </div>
     </React.Fragment>
   )
