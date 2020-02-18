@@ -10,6 +10,7 @@ import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator';
 import PeoplePage from '../people-page/people-page';
 import SwapiService from '../../services/swapi-service';
+import Row from '../row';
 
 export default class App extends Component {
 
@@ -40,6 +41,21 @@ export default class App extends Component {
 
     const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
 
+    const {getPerson, getStarship, getPersonImage, getStarshipImage} = this.swapiService;
+
+    const personDetails = (
+      <ItemDetails 
+        itemId={11} 
+        getData={getPerson}
+        getImageUrl={getPersonImage} />
+    );
+
+    const starShipDetails = (
+      <ItemDetails 
+        itemId={5}
+        getData={getStarship}
+        getImageUrl={getStarshipImage} />
+    );
 
     return (
       <div>
@@ -53,7 +69,11 @@ export default class App extends Component {
           </button>
           <ErrorButton />
         </div>
-        <PeoplePage />
+
+        <Row 
+          left={personDetails}
+          right={starShipDetails} />
+        {/* <PeoplePage /> */}
 
       </div>
     );

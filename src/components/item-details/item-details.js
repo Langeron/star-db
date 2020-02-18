@@ -12,6 +12,7 @@ export default class ItemDetails extends Component {
 
   state = {
     item: null,
+    image: null,
     loading: true,
     error: false
   };
@@ -35,18 +36,18 @@ export default class ItemDetails extends Component {
   };
 
   updateItem() {
-    const { itemId } = this.props;
+    const { itemId, getData, getImageUrl } = this.props;
 
     if (!itemId) {
       return;
     }
 
-    this.swapiService
-      .getPerson(itemId)
+    getData(itemId)
       .then((item) => {
         this.setState({
           item,
-          loading: false
+          loading: false,
+          image: getImageUrl(item)
         });
       })
       .catch((err) => this.onError());
@@ -54,7 +55,7 @@ export default class ItemDetails extends Component {
 
   render() {
 
-    const { item, loading, error } = this.state;
+    const { item, loading, error, image } = this.state;
 
     if (!item) {
       return <span>Select a item from a list</span>
@@ -63,7 +64,7 @@ export default class ItemDetails extends Component {
     const hasContent = !(loading || error);
     const errorMessage = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner /> : null;
-    const content = hasContent ? <ItemView item={item}/> : null;
+    const content = hasContent ? <ItemView item={item} image={image}/> : null;
 
     return (
       <div className="item-details card">
@@ -75,12 +76,12 @@ export default class ItemDetails extends Component {
   }
 }
 
-const ItemView = ({ item }) => {
+const ItemView = ({ item, image }) => {
   const { id, name, gender, birthYear, eyeColor } = item;
 
   return (
     <React.Fragment >
-      <img className="item-image" src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+      <img className="item-image" src={image} />
 
       <div className="card-body">
         <h4> {name} </h4>
