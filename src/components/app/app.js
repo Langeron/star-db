@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ItemList from '../item-list';
-import ItemDetails from '../item-details';
+import ItemDetails, { Record } from '../item-details/item-details';
 
 import './app.css';
 import ErrorButton from '../error-button';
@@ -47,14 +47,24 @@ export default class App extends Component {
       <ItemDetails 
         itemId={11} 
         getData={getPerson}
-        getImageUrl={getPersonImage} />
+        getImageUrl={getPersonImage} >
+        
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
+
+      </ItemDetails>
     );
 
     const starShipDetails = (
       <ItemDetails 
         itemId={5}
         getData={getStarship}
-        getImageUrl={getStarshipImage} />
+        getImageUrl={getStarshipImage} >
+        
+        <Record field="model" label="Model" />
+        <Record field="length" label="length" />
+        <Record field="costInCredits" label="Cost" />
+      </ItemDetails>
     );
 
     return (
@@ -74,6 +84,8 @@ export default class App extends Component {
           left={personDetails}
           right={starShipDetails} />
         {/* <PeoplePage /> */}
+
+        <ItemList getData={this.swapiService.getAllPeople}/>
 
       </div>
     );
