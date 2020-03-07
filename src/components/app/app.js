@@ -85,7 +85,12 @@ export default class App extends Component {
           right={starShipDetails} />
         {/* <PeoplePage /> */}
 
-        <ItemList getData={this.swapiService.getAllPeople}/>
+        <ItemList 
+          getData={this.swapiService.getAllPeople}
+          onItemSelected={() => {}} >
+            
+          { ({name}) => <span>{name}</span> }
+        </ItemList>
 
       </div>
     );
