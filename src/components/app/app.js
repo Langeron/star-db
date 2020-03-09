@@ -9,6 +9,8 @@ import ErrorBoundary from '../error-boundary';
 import SwapiService from '../../services/swapi-service';
 import Row from '../row';
 
+import { SwapiServiceProvider } from '../swapi-service-context';
+
 import {
   PersonDetails,
   PlanetDetails,
@@ -40,25 +42,26 @@ export default class App extends Component {
 
     return (
       <ErrorBoundary>
-        <Header />
-        {planet}
+        <SwapiServiceProvider value={this.swapiService}>
+          <Header />
+          {planet}
 
-        <div className="row mb2 button-row">
-          <button className="toggle-planet btn btn-warning btn-lg"
-            onClick={this.toggleRandomPlanet}>
-            Toggle Random Planet
+          <div className="row mb2 button-row">
+            <button className="toggle-planet btn btn-warning btn-lg"
+              onClick={this.toggleRandomPlanet}>
+              Toggle Random Planet
           </button>
-          <ErrorButton />
-        </div>
+            <ErrorButton />
+          </div>
 
-        <PersonDetails itemId={11} />
-        <PlanetDetails itemId={5} />
-        <StarshipDetails itemId={9} />
+          <PersonDetails itemId={11} />
+          <PlanetDetails itemId={5} />
+          <StarshipDetails itemId={9} />
 
-        <PersonList />
-        <StarshipList />
-        <PlanetList />
-
+          <PersonList />
+          <StarshipList />
+          <PlanetList />
+        </SwapiServiceProvider>
       </ErrorBoundary>
     );
   }
