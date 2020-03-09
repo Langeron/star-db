@@ -6,3 +6,7 @@
   .item-list .list-group-item:hover {
 	background-color: #444;
   }
+
+  .item-list {
+    margin: 20px 0;
+  }

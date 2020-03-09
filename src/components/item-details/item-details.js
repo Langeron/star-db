@@ -15,8 +15,6 @@ const Record = ({ item, field, label }) => {
   );
 };
 
-export { Record };
-
 export default class ItemDetails extends Component {
 
   swapiService = new SwapiService();
@@ -88,7 +86,7 @@ export default class ItemDetails extends Component {
 }
 
 const ItemView = ({ item, image, children }) => {
-  const { name, gender, birthYear, eyeColor } = item;
+  const { name } = item;
 
   return (
     <React.Fragment >
@@ -108,3 +106,5 @@ const ItemView = ({ item, image, children }) => {
     </React.Fragment>
   )
 }
+
+export { Record };

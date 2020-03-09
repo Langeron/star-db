@@ -2,23 +2,28 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ItemList from '../item-list';
-import ItemDetails, { Record } from '../item-details/item-details';
 
 import './app.css';
 import ErrorButton from '../error-button';
-import ErrorIndicator from '../error-indicator';
-import PeoplePage from '../people-page/people-page';
+import ErrorBoundary from '../error-boundary';
 import SwapiService from '../../services/swapi-service';
 import Row from '../row';
+
+import {
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails,
+  PersonList,
+  PlanetList,
+  StarshipList
+} from '../sw-components'
 
 export default class App extends Component {
 
   swapiService = new SwapiService();
 
   state = {
-    showRandomPlanet: true,
-    hasError: false
+    showRandomPlanet: true
   }
 
   toggleRandomPlanet = () => {
@@ -29,46 +34,12 @@ export default class App extends Component {
     });
   };
 
-  componentDidCatch() {
-    this.setState({ hasError: true });
-  }
-
   render() {
-
-    if (this.state.hasError) {
-      return <ErrorIndicator />
-    }
 
     const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
 
-    const {getPerson, getStarship, getPersonImage, getStarshipImage} = this.swapiService;
-
-    const personDetails = (
-      <ItemDetails 
-        itemId={11} 
-        getData={getPerson}
-        getImageUrl={getPersonImage} >
-        
-        <Record field="gender" label="Gender" />
-        <Record field="eyeColor" label="Eye Color" />
-
-      </ItemDetails>
-    );
-
-    const starShipDetails = (
-      <ItemDetails 
-        itemId={5}
-        getData={getStarship}
-        getImageUrl={getStarshipImage} >
-        
-        <Record field="model" label="Model" />
-        <Record field="length" label="length" />
-        <Record field="costInCredits" label="Cost" />
-      </ItemDetails>
-    );
-
     return (
-      <div>
+      <ErrorBoundary>
         <Header />
         {planet}
 
@@ -80,19 +51,15 @@ export default class App extends Component {
           <ErrorButton />
         </div>
 
-        <Row 
-          left={personDetails}
-          right={starShipDetails} />
-        {/* <PeoplePage /> */}
+        <PersonDetails itemId={11} />
+        <PlanetDetails itemId={5} />
+        <StarshipDetails itemId={9} />
 
-        <ItemList 
-          getData={this.swapiService.getAllPeople}
-          onItemSelected={() => {}} >
-            
-          { ({name}) => <span>{name}</span> }
-        </ItemList>
+        <PersonList />
+        <StarshipList />
+        <PlanetList />
 
-      </div>
+      </ErrorBoundary>
     );
   }
 };

@@ -19,7 +19,6 @@ const withData = (View, getData) => {
 		};
 
 		render() {
-			console.log(this.props)
 
 			const { data } = this.state;
 
