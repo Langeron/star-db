@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Spinner from '../spinner';
 
-const withData = (View, getData) => {
+const withData = (View) => {
 	return class extends Component {
 
 		state = {
@@ -10,7 +10,8 @@ const withData = (View, getData) => {
 		}
 
 		componentDidMount() {
-			getData()
+			console.log(this.props.getData)
+			this.props.getData()
 				.then((data) => {
 					this.setState({
 						data
