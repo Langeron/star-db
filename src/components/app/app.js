@@ -7,7 +7,7 @@ import './app.css';
 import ErrorButton from '../error-button';
 import ErrorBoundary from '../error-boundary';
 import SwapiService from '../../services/swapi-service';
-import Row from '../row';
+import DummySwapiService from '../../services/dummy-swapi-service'
 
 import { SwapiServiceProvider } from '../swapi-service-context';
 
@@ -22,10 +22,10 @@ import {
 
 export default class App extends Component {
 
-  swapiService = new SwapiService();
-
+  
   state = {
-    showRandomPlanet: true
+    showRandomPlanet: true,
+    swapiService: new SwapiService()
   }
 
   toggleRandomPlanet = () => {
@@ -36,14 +36,25 @@ export default class App extends Component {
     });
   };
 
+  onServiceChange = (evt) => {
+    this.setState(({swapiService}) => {
+      const Service = swapiService instanceof SwapiService ?
+        DummySwapiService : SwapiService;
+        
+        return {
+          swapiService: new Service
+        }
+    })
+  }
+
   render() {
 
     const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
 
     return (
       <ErrorBoundary>
-        <SwapiServiceProvider value={this.swapiService}>
-          <Header />
+        <SwapiServiceProvider value={this.state.swapiService}>
+          <Header onServiceChange={this.onServiceChange} />
           {planet}
 
           <div className="row mb2 button-row">
