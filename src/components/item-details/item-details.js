@@ -93,7 +93,7 @@ const ItemView = ({ item, image, children }) => {
 
   return (
     <React.Fragment >
-      <img className="item-image" src={image} />
+      <img className="item-image" src={image} alt={name} />
 
       <div className="card-body">
         <h4> {name} </h4>

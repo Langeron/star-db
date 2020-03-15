@@ -14,7 +14,7 @@ const ItemList = (props) => {
         {label}
       </li>
     )
-  });;
+  });
   return (
     <ul className="item-list list-group">
       {items}
